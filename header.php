@@ -38,7 +38,7 @@
 		<?php // drop Google Analytics Here ?>
 		<?php // end analytics ?>
 
-		<link rel="stylesheet" href="library/css/foundation.min.css">
+		<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/library/css/foundation.min.css">
 
 	</head>
 
@@ -63,14 +63,15 @@
         			               'depth' => 0,                                   // limit the depth of the nav
     					         'fallback_cb' => ''                             // fallback function (if there is one)
 						)); ?>
-
 					</nav>
 
 					<?php // to use a image just replace the bloginfo('name') with your img src and remove the surrounding <p> ?>
-					<p id="logo" class="h1" itemscope itemtype="http://schema.org/Organization"><a href="<?php echo home_url(); ?>" rel="nofollow"><img src="\library\img\logo.png"</a></p>
+					<p id="logo" class="h1" itemscope itemtype="http://schema.org/Organization"><a href="<?php echo home_url(); ?>" rel="nofollow"><img src="<?php echo get_template_directory_uri(); ?>/library/img/logo.png"</a></p>
 
 					<?php // if you'd like to use the site description you can un-comment it below ?>
-					<?php // bloginfo('description'); ?>
+					<div class="blog-desc float-right">
+						<?php bloginfo('description'); ?>
+					</div>
 
 				</div>
 

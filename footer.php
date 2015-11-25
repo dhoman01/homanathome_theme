@@ -28,11 +28,11 @@
 
 		<?php // all js scripts are loaded in library/bones.php ?>
 		<?php wp_footer(); ?>
-		<script src="library/js/jquery.min.js"></script>
-		<script src="library/js/foundation.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="<?php echo get_template_directory_uri(); ?>/library/js/foundation.min.js"></script>
 		<script>
 			$(document).ready({
-				fondation();
+				fondation()
 			});
 		</script>
 	</body>
