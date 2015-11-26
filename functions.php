@@ -46,6 +46,7 @@ function bones_ahoy() {
   // enqueue base scripts and styles
   add_action( 'wp_enqueue_scripts', 'bones_scripts_and_styles', 999 );
   // ie conditional wrapper
+  add_theme_support( 'post-thumbnails' );
 
   // launching this stuff after theme setup
   bones_theme_support();
@@ -62,6 +63,8 @@ function bones_ahoy() {
 
 // let's get this party started
 add_action( 'after_setup_theme', 'bones_ahoy' );
+
+add_image_size( 'featured-thumb', 500, 500, true ); // (cropped)
 
 
 /************* OEMBED SIZE OPTIONS *************/
@@ -115,14 +118,14 @@ new image size.
 
 /************* THEME CUSTOMIZE *********************/
 
-/* 
+/*
   A good tutorial for creating your own Sections, Controls and Settings:
   http://code.tutsplus.com/series/a-guide-to-the-wordpress-theme-customizer--wp-33722
-  
+
   Good articles on modifying the default options:
   http://natko.com/changing-default-wordpress-theme-customization-api-sections/
   http://code.tutsplus.com/tutorials/digging-into-the-theme-customizer-components--wp-27162
-  
+
   To do:
   - Create a js for the postmessage transport method
   - Create some sanitize functions to sanitize inputs
@@ -132,7 +135,7 @@ new image size.
 function bones_theme_customizer($wp_customize) {
   // $wp_customize calls go here.
   //
-  // Uncomment the below lines to remove the default customize sections 
+  // Uncomment the below lines to remove the default customize sections
 
   // $wp_customize->remove_section('title_tagline');
   // $wp_customize->remove_section('colors');
@@ -142,7 +145,7 @@ function bones_theme_customizer($wp_customize) {
 
   // Uncomment the below lines to remove the default controls
   // $wp_customize->remove_control('blogdescription');
-  
+
   // Uncomment the following to change the default section titles
   // $wp_customize->get_section('colors')->title = __( 'Theme Colors' );
   // $wp_customize->get_section('background_image')->title = __( 'Images' );
@@ -155,9 +158,19 @@ add_action( 'customize_register', 'bones_theme_customizer' );
 // Sidebars & Widgetizes Areas
 function bones_register_sidebars() {
 	register_sidebar(array(
-		'id' => 'sidebar1',
-		'name' => __( 'Sidebar 1', 'bonestheme' ),
-		'description' => __( 'The first (primary) sidebar.', 'bonestheme' ),
+		'id' => 'sidebar',
+		'name' => 'Right Sidebar',
+		'description' => 'Primary Sidebar',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h4 class="widgettitle">',
+		'after_title' => '</h4>',
+	));
+
+  register_sidebar(array(
+		'id' => 'footer',
+		'name' => 'Footer Sidebar',
+		'description' => 'Footer Sidebar',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h4 class="widgettitle">',
@@ -230,6 +243,20 @@ function bones_comments( $comment, $args, $depth ) {
 <?php
 } // don't remove this bracket!
 
+function catch_that_image($my_postid) {
+  $first_img = '';
+  ob_start();
+  ob_end_clean();
+  $content_post = get_post($my_postid);
+  $content = $content_post->post_content;
+  $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $content, $matches);
+  $first_img = $matches[1][0];
+
+  if(empty($first_img)) {
+    $first_img = "";
+  }
+  return $first_img;
+}
 
 /*
 This is a modification of a function found in the
