@@ -285,7 +285,8 @@ function sp_filter_ptags_on_images($content){
 function sp_excerpt_more($more) {
 	global $post;
 	// edit here if you like
-	return '...  <a class="excerpt-read-more" href="'. get_permalink( $post->ID ) . '" title="'. __( 'Read ', 'sptheme' ) . esc_attr( get_the_title( $post->ID ) ).'">'. __( 'Read more &raquo;', 'sptheme' ) .'</a>';
+	$readmoretext = get_theme_mod('sp_read_more_text', 'Read more &raquo;');
+	return '...  <a class="excerpt-read-more fancy-read-more" href="'. get_permalink( $post->ID ) . '" title="'. __( 'Read ', 'sptheme' ) . esc_attr( get_the_title( $post->ID ) ).'">'. __( $readmoretext, 'sptheme' ) .'</a>';
 }
 
 

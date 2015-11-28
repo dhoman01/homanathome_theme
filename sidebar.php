@@ -10,14 +10,18 @@
 </div>
 <div class="subscribe-box">
 	<h4>Like What You See?</h4>
+	<form action="" method="post" accept-charset="utf-8" id="subscribe-blog">
 	<p>
 		Subscribe below and never miss a post!
 	</p>
-	<form>
-		<input type="text" placeholder="name">
-		<input type="email" placeholder="email">
-		<input type="submit" value=">>">
-	</form>
+      <input type="text" name="email" style="width: 95%; padding: 1px 2px" value="Email Address" id="subscribe-field" onclick="if ( this.value == 'Email Address' ) { this.value = ''; }" onblur="if ( this.value == '' ) { this.value = 'Email Address'; }">
+        <input type="hidden" name="action" value="subscribe">
+        <input type="hidden" name="source" value="">
+        <input type="hidden" name="sub-type" value="">
+        <input type="hidden" name="redirect_fragment" value="">
+        <input type="hidden" id="_wpnonce" name="_wpnonce" value="e50fc688c8">
+				<input type="submit" value=">>" name="jetpack_subscriptions_widget">
+    </form>
 </div>
 <div class="follow-us">
 	<h4>Follow Us On</h4>

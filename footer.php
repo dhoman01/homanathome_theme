@@ -1,6 +1,6 @@
 <footer>
   <div class="row small-up-1 medium-up-2 large-up-3">
-    <div  class="small-4 columns">
+    <div  class="small-12 medium-4 columns">
 			<?php if ( is_active_sidebar( 'footer' ) ) : ?>
 				<?php dynamic_sidebar( 'footer' ); ?>
 			<?php endif; ?>
@@ -11,7 +11,7 @@
       <!-- Please call pinit.js only once per page -->
       <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
     </div>
-    <div class="small-3 columns">
+    <div class="small-12 medium-4 columns">
       <div class="horz ads">
 				<div class="adsbygoogleContainer">
 				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -31,10 +31,10 @@
 </footer>
 <div class="bottom-bar">
   <div class="row align-middle">
-    <div class="small-up-1 medium-up-4 columns footer-nav">
+    <div class="small-12 medium-4 columns footer-nav">
       <?php wp_nav_menu( array('theme_location' => 'footer-nav', 'menu' => 'Footer Nav', 'container' => false )); ?>
     </div>
-    <div class="small-up-1 medium-up-4 columns">
+    <div class="small-12 medium-4 columns">
       <ul class="center">
         <li>
           <a href="#" class="webicon svg facebook small">Follow us on Instagram</a>
@@ -50,7 +50,7 @@
         </li>
       </ul>
     </div>
-    <div class="small-up-1 medium-up-4 columns text-right">
+    <div class="small-12 medium-4 columns text-right">
       <p>
         Copyright Homan At Homan
       </p>

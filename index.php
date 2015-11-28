@@ -13,10 +13,12 @@
 				    $recent_posts = wp_get_recent_posts( $args, ARRAY_A );
 						$count = "0";
 						foreach( $recent_posts as $recent ){
+              $image = catch_that_image($recent["ID"]);
+              $image = preg_replace( '/\/c_scale,([^*]_\d*)\//', '/', $image );
 							if($count < 1){
-								echo '<li class="orbit-slide is-active" data-slide="' . $count . '"><a href="' . get_permalink($recent["ID"]) . '"><img class="orbit-image" src="' . catch_that_image($recent["ID"]) . '" alt="'. $recent["post_title"] .'"><figcaption class="orbit-caption">' . $recent["post_title"] . '</figcaption></a></li>';
+								echo '<li class="orbit-slide is-active" data-slide="' . $count . '"><a href="' . get_permalink($recent["ID"]) . '"><img class="orbit-image" src="' . $image . '" alt="'. $recent["post_title"] .'"><figcaption class="orbit-caption">' . $recent["post_title"] . '</figcaption></a></li>';
 							} else {
-								echo '<li class="orbit-slide" data-slide="' . $count . '"><a href="' . get_permalink($recent["ID"]) . '"><img class="orbit-image" src="' . catch_that_image($recent["ID"]) . '" alt="'. $recent["post_title"] .'"><figcaption class="orbit-caption">' . $recent["post_title"] . '</figcaption></a></li>';
+								echo '<li class="orbit-slide" data-slide="' . $count . '"><a href="' . get_permalink($recent["ID"]) . '"><img class="orbit-image" src="' . $image . '" alt="'. $recent["post_title"] .'"><figcaption class="orbit-caption">' . $recent["post_title"] . '</figcaption></a></li>';
 							}
 							$count++;
 						}

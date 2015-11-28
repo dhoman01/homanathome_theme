@@ -48,9 +48,12 @@
 		  </div>
 		</div>
 		<header class="large-12 columns">
-		  <div class="row align-middle top-bar">
-		    <div class="large-10 columns">
-					<div class="large-10 columns">
+			<div class="title-bar" data-responsive-toggle="main-menu" data-hide-for="medium">
+			  <button class="menu-icon" type="button" data-toggle></button>
+			</div>
+		  <div id="main-menu" class="large-12 columns top-bar">
+		    <div class="top-bar-left">
+					<div class="text-center">
 						<?php $center = get_theme_mod('sp_center_nav',true);
 
 						$centerclass = "";
@@ -62,19 +65,18 @@
 						'menu' => 'Main Nav',
 						'container' => false,
 						'menu_class' => 'dropdown menu',
-						'items_wrap' => '<ul id="%1$s" class="%2$s '. $centerclass . '" data-dropdown-menu>%3$s</ul>',
+						'items_wrap' => '<ul id="%1$s" class="%2$s '. $centerclass . '" data-dropdown-menu data-click-open="false" data-hover-delay="30">%3$s</ul>',
 						'walker' => new Top_Bar_Walker() )); ?>
 			    </div>
 		    </div>
-
-		    <div id="topabr" class="large-2 columns align-center">
+		    <div id="topabr" class="top-bar-right">
 					<?php if ( is_active_sidebar( 'topbar' ) ) : ?>
 						<?php dynamic_sidebar( 'topbar' ); ?>
 					<?php endif; ?>
 		    </div>
 		  </div>
-		  <div class="row">
-		    <div class="large-2 columns">
+		  <div class="row large-12 columns">
+		    <div class="small-4 large-2 columns">
 			      <img style="position: absolute;" src="<?php echo get_theme_mod( 'sp_logo' ); ?>" />
 		    </div>
 		    <div class="large-10 columns site-title-container">
