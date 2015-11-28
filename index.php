@@ -5,14 +5,15 @@
     <div class="large-12 columns">
       <div class="orbit" role="region" aria-label="Placeholder" data-orbit>
         <ul class="orbit-container" tabindex="0">
-          <button class="orbit-previous" aria-label="previous" tabindex="0"><span class="show-for-sr">Previous Slide</span>◀</button>
-          <button class="orbit-next" aria-label="next" tabindex="0"><span class="show-for-sr">Next Slide</span>▶</button>
-					<?php $args = array( 'numberposts' => '5', 'post_status' => 'publish' );
+          <button class="orbit-previous" aria-label="previous" tabindex="0"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
+          <button class="orbit-next" aria-label="next" tabindex="0"><span class="show-for-sr">Next Slide</span>&#9654;</button>
+					<?php $slides = get_theme_mod( 'sp_img_number', 5);
+            $args = array( 'numberposts' => $slides, 'post_status' => 'publish' );
 
 				    $recent_posts = wp_get_recent_posts( $args, ARRAY_A );
 						$count = "0";
 						foreach( $recent_posts as $recent ){
-							if(count < 1){
+							if($count < 1){
 								echo '<li class="orbit-slide is-active" data-slide="' . $count . '"><a href="' . get_permalink($recent["ID"]) . '"><img class="orbit-image" src="' . catch_that_image($recent["ID"]) . '" alt="'. $recent["post_title"] .'"><figcaption class="orbit-caption">' . $recent["post_title"] . '</figcaption></a></li>';
 							} else {
 								echo '<li class="orbit-slide" data-slide="' . $count . '"><a href="' . get_permalink($recent["ID"]) . '"><img class="orbit-image" src="' . catch_that_image($recent["ID"]) . '" alt="'. $recent["post_title"] .'"><figcaption class="orbit-caption">' . $recent["post_title"] . '</figcaption></a></li>';
@@ -22,11 +23,15 @@
 					?>
         </ul>
         <nav class="orbit-bullets">
-         <button class="is-active" data-slide="0"><span class="show-for-sr">First slide details.</span><span class="show-for-sr">Current Slide</span></button>
-         <button data-slide="1"><span class="show-for-sr">Second slide details.</span></button>
-         <button data-slide="2"><span class="show-for-sr">Third slide details.</span></button>
-         <button data-slide="3"><span class="show-for-sr">Fourth slide details.</span></button>
-         <button data-slide="4"><span class="show-for-sr">Fifth slide details.</span></button>
+          <?php
+            for ($x = 0; $x < get_theme_mod('sp_img_number', 5); $x++) {
+                if($x < 1){
+                  echo '<button class="is-active" data-slide="' . $x . '"><span class="show-for-sr">' . $x . ' slide details.</span><span class="show-for-sr">Current Slide</span></button>';
+                } else {
+                  echo '<button data-slide="' . $x . '"><span class="show-for-sr">Second slide details.</span></button>';
+                }
+            }
+          ?>
        </nav>
       </div>
     </div>

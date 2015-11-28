@@ -8,8 +8,8 @@
 	  <head>
 	    <meta charset="utf-8" />
 	    <meta http-equiv="x-ua-compatible" content="ie=edge">
-	    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/app.css">
-			<title><?php wp_title(''); ?></title>
+	    <!-- <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/app.css"> -->
+			<title><?php echo get_bloginfo( 'name' ); ?></title>
 
 			<?php // mobile meta (hooray!) ?>
 			<meta name="HandheldFriendly" content="True">
@@ -32,7 +32,7 @@
 	  </head>
 	  <body>
 		<div class="row">
-		  <div class="horz ads large-12 columns text-center">
+		  <div class="banner ads large-12 columns text-center">
 				<div class="adsbygoogleContainer">
 				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		        <!-- Diane Homan -->
@@ -50,26 +50,40 @@
 		<header class="large-12 columns">
 		  <div class="row align-middle top-bar">
 		    <div class="large-10 columns">
-		      <nav class="main-nav align-center">
-						<?php wp_nav_menu( array('menu' => 'Main Nav' )); ?>
-		      </nav>
+					<div class="large-10 columns">
+						<?php $center = get_theme_mod('sp_center_nav',true);
+
+						$centerclass = "";
+						if($center){
+							$centerclass = "nav-center";
+						}
+						wp_nav_menu( array(
+						'theme_location' => 'main-nav',
+						'menu' => 'Main Nav',
+						'container' => false,
+						'menu_class' => 'dropdown menu',
+						'items_wrap' => '<ul id="%1$s" class="%2$s '. $centerclass . '" data-dropdown-menu>%3$s</ul>',
+						'walker' => new Top_Bar_Walker() )); ?>
+			    </div>
 		    </div>
 
-		    <div class="large-2 columns align-center">
-		      <input type="text" placeholder="Search" />
+		    <div id="topabr" class="large-2 columns align-center">
+					<?php if ( is_active_sidebar( 'topbar' ) ) : ?>
+						<?php dynamic_sidebar( 'topbar' ); ?>
+					<?php endif; ?>
 		    </div>
 		  </div>
 		  <div class="row">
 		    <div class="large-2 columns">
-		      <img style="position: absolute;" src="http://res.cloudinary.com/homanathome-com/image/upload/c_crop,g_east,h_150,w_200/v1441419538/Header_-_Homan_at_Home_zzfqcv.png" />
+			      <img style="position: absolute;" src="<?php echo get_theme_mod( 'sp_logo' ); ?>" />
 		    </div>
-		    <div class="large-10 columns">
-		      <h1 class="site-title">Homan At Home</h1>
+		    <div class="large-10 columns site-title-container">
+		      <h1 class="site-title"><?php echo get_bloginfo( 'name' ); ?></h1>
 		    </div>
 		  </div>
 		  <div class="row align-right">
-		    <div class="large-8 columns push-3">
-		      <h3 class="site-desc">Simple and budget friendly ways to make your house a home</h3>
+		    <div class="large-8 columns site-desc-container">
+		      <h3 class="site-desc"><?php echo get_bloginfo( 'description' ); ?></h3>
 		    </div>
 		  </div>
 		  <hr />

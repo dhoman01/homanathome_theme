@@ -1,10 +1,12 @@
 <div class="welcome">
-	<h4>Welcome</h4>
-	<img class="float-right" src="//placehold.it/150x150" alt="">
+	<h4><?php echo get_theme_mod( 'sp_welcome_title', 'Welcome!'); ?></h4>
+	<img class="float-right" src="<?php echo get_theme_mod( 'sp_welcome_img', '' ); ?>" alt="">
 	<p>
-		We're the Homans - Diane, Dustin, and Alex - and we're excited to share the recipes, crafts, projects and tips we're using to build our home!
+		<?php echo get_theme_mod( 'sp_welcome_textbox', 'Add your welcome message here.' ); ?>
 	</p>
-	<a href="about.php">Learn More -></a>
+	<?php if(get_theme_mod('sp_welcome_url','') !== '') : ?>
+		<a href="<?php echo get_theme_mod('sp_welcome_url', '/about'); ?>">Learn More -></a>
+	<?php endif; ?>
 </div>
 <div class="subscribe-box">
 	<h4>Like What You See?</h4>
@@ -35,7 +37,7 @@
 	</div>
 </div>
 <div class="row small-up-1 medium-up-2">
-	<div class="columns vert ads">
+	<div class="columns horz ads">
 		<div class="adsbygoogleContainer">
 		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 				<!-- Diane Homan -->
@@ -54,15 +56,4 @@
 	<?php if ( is_active_sidebar( 'sidebar' ) ) : ?>
 		<?php dynamic_sidebar( 'sidebar' ); ?>
 	<?php endif; ?>
-</div>
-<div class="popular-posts">
-	<h4>Popular Posts</h4>
-	<div class="row align-center">
-		<img src="//placehold.it/200x200" >
-		<img src="//placehold.it/200x200" >
-		<img src="//placehold.it/200x200" >
-		<img src="//placehold.it/200x200" >
-		<img src="//placehold.it/200x200" >
-		<img src="//placehold.it/200x200" >
-	</div>
 </div>
