@@ -52,7 +52,7 @@
     </div>
     <div class="small-12 medium-4 columns text-right">
       <p>
-        Copyright Homan At Homan
+        <?php echo get_theme_mod('sp_copyright_text'); ?>
       </p>
     </div>
   </div>
@@ -65,7 +65,16 @@
     <script>
       jQuery(document).ready(function(){
         jQuery("#s").attr("placeholder", "search");
+        jQuery('#slider').spotSwipe().on('swipeleft', function(){
+          jQuery(this).trigger('orbit.changeslide', false);
+        });
+        jQuery('#slider').spotSwipe().on('swiperight', function(){
+          jQuery(this).trigger('orbit.changeslide', true);
+        });
       })
     </script>
+  </div>
+</div>
+</div>
 	</body>
 	</html> <!-- end of site. what a ride! -->

@@ -205,6 +205,7 @@ function sp_theme_support() {
 
 	// registering wp3+ menus
 	register_nav_menus(array( 'main-nav' => 'Main Nav' ));
+	register_nav_menus(array( 'offcanvas-nav' => 'Off-Canvas Nav' ));
 	register_nav_menus(array( 'footer-nav' => 'Footer Nav' ));
 	// Enable support for HTML5 markup.
 	add_theme_support( 'html5', array(

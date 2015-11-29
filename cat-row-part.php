@@ -9,7 +9,7 @@
 <div class="large-12 columns">
   <div class="row small-up-1 medium-up-2 large-up-3">
     <?php $args = array(
-    	'posts_per_page'   => 3,
+    	'posts_per_page'   => $num_of_posts,
     	'offset'           => 0,
     	'category'         => $category->cat_ID,
     	'category_name'    => '',
@@ -29,8 +29,7 @@
     $posts_array = get_posts( $args );
     foreach ( $posts_array as $post ) : setup_postdata( $post ); ?>
       <div class="column">
-        <a href="<?php the_permalink(); ?>"><img src="<?php echo catch_that_image($post->ID); ?>" class="thumbnail" alt="<?php the_title(); ?>"></a>
-        <h5 class="post-title"><?php the_title(); ?></h5>
+        <?php include( locate_template( 'post-thumb.php' ) ) ?>
       </div>
     <?php endforeach;
     wp_reset_postdata();?>

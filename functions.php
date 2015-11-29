@@ -67,6 +67,20 @@ add_action( 'after_setup_theme', 'sp_ahoy' );
 
 add_image_size( 'featured-thumb', 500, 500, true ); // (cropped)
 
+function limit_posts_per_page() {
+	if ( is_category() )
+		return 12;
+	else
+		return 12; // default: 5 posts per page
+}
+add_filter('pre_option_posts_per_page', 'limit_posts_per_page');
+
+function limit_posts_per_archive_page() {
+	if ( is_category() )
+		set_query_var('posts_per_archive_page', 'posts_per_page'); // or use variable key: posts_per_page
+}
+add_filter('pre_get_posts', 'limit_posts_per_archive_page');
+
 
 /************* OEMBED SIZE OPTIONS *************/
 
@@ -288,6 +302,21 @@ function sp_theme_customizer($wp_customize) {
         'type' => 'text',
     )
   );
+  $wp_customize->add_setting(
+    'sp_copyright_text',
+    array(
+        'default' => '',
+    )
+  );
+  $wp_customize->add_control(
+    'sp_copyright_text',
+    array(
+        'label' => 'Copyright Text',
+        'description' => 'Change the text in the right hand section of the bottom bar.',
+        'section' => 'theme_branding',
+        'type' => 'text',
+    )
+  );
 
   /****  Slider Settings  ****/
   $wp_customize->add_section(
@@ -418,6 +447,9 @@ function sp_theme_customizer($wp_customize) {
   );
 
   /****  Nav Settings  ****/
+  /************************/
+
+  /**** Main Nav ****/
   $wp_customize->add_section(
         'nav_settings',
         array(
@@ -446,10 +478,40 @@ function sp_theme_customizer($wp_customize) {
     'default' => '#000000'
     ) );
   $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'sp_nav_item_color', array(
-  	'label'        => __( 'NavI tem Color', sptheme ),
+  	'label'        => __( 'Nav Item Color', sptheme ),
   	'section'    => 'nav_settings',
     'description' => 'This setting also applies to the footer nav area.',
   	'settings'   => 'sp_nav_item_color',
+  ) ) );
+
+  /****  Off-Nav Settings  ****/
+  $wp_customize->add_section(
+        'offcanvas_nav_settings',
+        array(
+            'title' => 'Off-Canvas Nav Settings',
+            'description' => 'This is where you edit the settings for the off-canvas navigation.',
+            'priority' => 35,
+        )
+  );
+  $wp_customize->add_setting(
+    'sp_oc_nav_background_color',
+    array(
+        'default' => '#eee',
+    )
+  );
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'sp_oc_nav_background_color', array(
+    'label'        => __( 'Off-Canvas Background Color', sptheme ),
+    'section'    => 'offcanvas_nav_settings',
+    'settings'   => 'sp_oc_nav_background_color',
+  ) ) );
+
+  $wp_customize->add_setting( 'sp_oc_nav_item_color', array(
+    'default' => '#000000'
+    ) );
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'sp_oc_nav_item_color', array(
+    'label'        => __( 'Off-Canvas Menu Item Color', sptheme ),
+    'section'    => 'offcanvas_nav_settings',
+    'settings'   => 'sp_oc_nav_item_color',
   ) ) );
 
 }
@@ -457,16 +519,21 @@ function sp_theme_customizer($wp_customize) {
 function sp_customizer_css() {
     ?>
     <style type="text/css">
-        h4 { color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
-        .subscribe-box > form > input[type="submit"] { color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
-        .cat-title > h2 { color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
-        a { color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
-        .button { color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
+        h4, .subscribe-box > form > input[type="submit"], .cat-title > h2, a, .button, .archive-title { color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
         .top-bar, .top-bar ul, footer, .title-bar { background-color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
         .bottom-bar, li.active {background-color: <?php echo get_theme_mod( 'sp_secondary_color' ); ?>;}
         .orbit-image {max-height: <?php echo get_theme_mod( 'sp_slider_height'); ?>px; max-width: <?php echo get_theme_mod( 'sp_slider_width'); ?>px;}
         .orbit-image { bottom: <?php echo get_theme_mod( 'sp_img_adjust' ); ?>px;}
-        .dropdown > li > a, .dropdown.menu .has-submenu.is-down-arrow > a::after, footer, footer .widgettitle, footer a, .title-bar {color: <?php echo get_theme_mod('sp_nav_item_color', '#000'); ?>;}
+        .dropdown > li > a, footer, footer .widgettitle, footer a, .title-bar {color: <?php echo get_theme_mod('sp_nav_item_color', '#000'); ?>;}
+        .dropdown.menu .has-submenu.is-down-arrow > a::after { border-color: <?php echo get_theme_mod('sp_nav_item_color', '#000'); ?> transparent transparent;}
+        .off-canvas, .is-drilldown-submenu {background-color: <?php echo get_theme_mod('sp_oc_nav_background_color'); ?>;}
+        .off-canvas a {color: <?php echo get_theme_mod('sp_oc_nav_item_color'); ?>;}
+        @media screen and (min-width: 0em) and (max-width: 31.9375em) {
+          header a {
+            color:white;
+          }
+        }
+    </style>
     <?php
 }
 add_action( 'wp_head', 'sp_customizer_css' );
@@ -603,77 +670,106 @@ function register_my_scripts() {
 
 add_action('wp_print_scripts','register_my_scripts');
 
-/**
- * Top Bar Walker
- *
- * @since 1.0.0
- */
-class Top_Bar_Walker extends Walker_Nav_Menu {
+class F_Dropdown_Walker extends Walker_Nav_Menu {
 
-  /**
-  * @see Walker_Nav_Menu::start_lvl()
- * @since 1.0.0
- *
- * @param string $output Passed by reference. Used to append additional content.
- * @param int $depth Depth of page. Used for padding.
-*/
-  function start_lvl( &$output, $depth = 0, $args = array() ) {
-      $output .= "\n<ul class=\"menu\">\n";
-  }
+    // add needed classes to submenus
+    // @see Walker::start_lvl()
+    function start_lvl( &$output, $depth = 0, $args = array() ) {
+        $output .= "\n<ul class=\"menu\">\n";
+    }
 
-  /**
-   * @see Walker_Nav_Menu::start_el()
-   * @since 1.0.0
-   *
-   * @param string $output Passed by reference. Used to append additional content.
-   * @param object $item Menu item data object.
-   * @param int $depth Depth of menu item. Used for padding.
-   * @param object $args
-   */
+    // add active class to active li to use in styling
+    // @see Walker::display_element()
+    function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) {
+        $element->classes[] = ( $element->current || $element->current_item_ancestor ) ? 'active' : '';
 
-  function start_el( &$output, $object, $depth = 0, $args = array(), $current_object_id = 0 ) {
-      $item_html = '';
-      parent::start_el( $item_html, $object, $depth, $args );
-
-      $output .= ( $depth == 0 ) ? '' : '';
-
-      $classes = empty( $object->classes ) ? array() : $object->classes = array();
-
-      $prepend = '<strong>';
-      $append = '</strong>';
-
-      if ( in_array('label', $classes) ) {
-          $item_html = preg_replace( '/<a[^>]*>( .* )<\/a>/iU', '<label>$1</label>', $item_html );
-      }
-
-      if ( in_array('divider', $classes) ) {
-        $item_html = preg_replace( '/<a[^>]*>( .* )<\/a>/iU', '', $item_html );
-      }
-
-      $output .= $item_html;
-  }
-
-/**
-   * @see Walker::display_element()
-   * @since 1.0.0
- *
- * @param object $element Data object
- * @param array $children_elements List of elements to continue traversing.
- * @param int $max_depth Max depth to traverse.
- * @param int $depth Depth of current element.
- * @param array $args
- * @param string $output Passed by reference. Used to append additional content.
- * @return null Null on failure with no changes to parameters.
- */
-  function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) {
-      $element->has_children = !empty( $children_elements[$element->ID] );
-      $element->classes[] = ( $element->current || $element->current_item_ancestor ) ? 'active' : '';
-      $element->classes[] = ( $element->has_children ) ? '' : '';
-
-      parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
-  }
-
+        parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
+    }
 }
+
+class F_Drilldown_Walker extends Walker_Nav_Menu {
+
+    // add needed classes to submenus
+    // @see Walker::start_lvl()
+    function start_lvl( &$output, $depth = 0, $args = array() ) {
+        $output .= "\n<ul class=\"vertical submenu menu\">\n";
+    }
+
+    function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) {
+        $element->classes[] = ( $element->current || $element->current_item_ancestor ) ? 'active' : '';
+
+        parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
+    }
+}
+
+// /**
+//  * Top Bar Walker
+//  *
+//  * @since 1.0.0
+//  */
+// class Top_Bar_Walker extends Walker_Nav_Menu {
+//
+//   /**
+//   * @see Walker_Nav_Menu::start_lvl()
+//  * @since 1.0.0
+//  *
+//  * @param string $output Passed by reference. Used to append additional content.
+//  * @param int $depth Depth of page. Used for padding.
+// */
+//   function start_lvl( &$output, $depth = 0, $args = array() ) {
+//       $output .= "\n<ul class=\"vertical submenu\">\n";
+//   }
+//
+//   /**
+//    * @see Walker_Nav_Menu::start_el()
+//    * @since 1.0.0
+//    *
+//    * @param string $output Passed by reference. Used to append additional content.
+//    * @param object $item Menu item data object.
+//    * @param int $depth Depth of menu item. Used for padding.
+//    * @param object $args
+//    */
+//
+//   function start_el( &$output, $object, $depth = 0, $args = array(), $current_object_id = 0 ) {
+//       $item_html = '';
+//       parent::start_el( $item_html, $object, $depth, $args );
+//
+//       $output .= ( $depth == 0 ) ? '' : '';
+//
+//       $classes = empty( $object->classes ) ? array() : $object->classes = array();
+//
+//       if ( in_array('label', $classes) ) {
+//           $item_html = preg_replace( '/<a[^>]*>( .* )<\/a>/iU', '<label>$1</label>', $item_html );
+//       }
+//
+//       if ( in_array('divider', $classes) ) {
+//         $item_html = preg_replace( '/<a[^>]*>( .* )<\/a>/iU', '', $item_html );
+//       }
+//
+//       $output .= $item_html;
+//   }
+//
+// /**
+//    * @see Walker::display_element()
+//    * @since 1.0.0
+//  *
+//  * @param object $element Data object
+//  * @param array $children_elements List of elements to continue traversing.
+//  * @param int $max_depth Max depth to traverse.
+//  * @param int $depth Depth of current element.
+//  * @param array $args
+//  * @param string $output Passed by reference. Used to append additional content.
+//  * @return null Null on failure with no changes to parameters.
+//  */
+//   function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) {
+//       $element->has_children = !empty( $children_elements[$element->ID] );
+//       $element->classes[] = ( $element->current || $element->current_item_ancestor ) ? 'active' : '';
+//       $element->classes[] = ( $element->has_children ) ? '' : '';
+//
+//       parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
+//   }
+//
+// }
 
 
 

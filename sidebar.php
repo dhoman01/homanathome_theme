@@ -25,7 +25,7 @@
 </div>
 <div class="follow-us">
 	<h4>Follow Us On</h4>
-	<div class="row small-up-1 medium-up-2 large-up-4">
+	<div class="row small-up-4">
 		<div class="column">
 			<a href="#" class="webicon svg facebook large">Like us on Facebook</a>
 		</div>
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 </div>
-<div class="row small-up-1 medium-up-2">
+<div class="row medium-2">
 	<div class="columns horz ads">
 		<div class="adsbygoogleContainer">
 		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
