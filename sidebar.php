@@ -27,35 +27,28 @@
 	<h4>Follow Us On</h4>
 	<div class="row small-up-4">
 		<div class="column">
-			<a href="#" class="webicon svg facebook large">Like us on Facebook</a>
+			<a href="<?php echo get_theme_mod('sp_facebook_follow_url'); ?>" class="webicon svg facebook large">Like us on Facebook</a>
 		</div>
 		<div class="column">
-			<a href="#" class="webicon svg twitter large">Follow us on Twitter</a>
+			<a href="<?php echo get_theme_mod('sp_twitter_follow_url'); ?>" class="webicon svg twitter large">Follow us on Twitter</a>
 		</div>
 		<div class="column">
-			<a href="#" class="webicon svg pinterest large">Pin us on Pinterest</a>
+			<a href="<?php echo get_theme_mod('sp_pinterest_follow_url'); ?>" class="webicon svg pinterest large">Pin us on Pinterest</a>
 		</div>
 		<div class="column">
-			<a href="#" class="webicon svg instagram large">Follow us on Instagram</a>
+			<a href="<?php echo get_theme_mod('sp_instagram_follow_url'); ?>" class="webicon svg instagram large">Follow us on Instagram</a>
 		</div>
 	</div>
 </div>
+<?php if (get_theme_mod('sp_google_ad_side') != '' ) : ?>
 <div class="row medium-2">
 	<div class="columns horz ads">
 		<div class="adsbygoogleContainer">
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<!-- Diane Homan -->
-				<ins class="adsbygoogle"
-						 style="display:block"
-						 data-ad-client="ca-pub-9239834729734789"
-						 data-ad-slot="9178492354"
-						 data-ad-format="auto"></ins>
-				<script>
-				(adsbygoogle = window.adsbygoogle || []).push({});
-				</script>
+			<?php echo get_theme_mod('sp_google_ad_side');?>
 		</div>
 	</div>
 </div>
+<?php endif; ?>
 <div class="sidebar">
 	<?php if ( is_active_sidebar( 'sidebar' ) ) : ?>
 		<?php dynamic_sidebar( 'sidebar' ); ?>

@@ -1,10 +1,8 @@
 <?php get_header(); ?>
 
-			<div id="content">
-
-				<div id="inner-content" class="wrap cf">
-
-						<main id="main" class="m-all t-2of3 d-5of7 cf" role="main" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">
+<div class="row content">
+	<div class="small-12 large-8 columns">
+		<div class="large-12 columns">
 
 							<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -12,7 +10,7 @@
 
 								<header class="article-header">
 
-									<h1 class="page-title" itemprop="headline"><?php the_title(); ?></h1>
+									<h1 class="archive-title" itemprop="headline"><?php the_title(); ?></h1>
 
 									<p class="byline vcard">
 										<?php printf( __( 'Posted', 'sptheme').' <time class="updated" datetime="%1$s" itemprop="datePublished">%2$s</time> '.__( 'by',  'sptheme').' <span class="author">%3$s</span>', get_the_time('Y-m-j'), get_the_time(get_option('date_format')), get_the_author_link( get_the_author_meta( 'ID' ) )); ?>
@@ -46,22 +44,16 @@
 									?>
 								</section> <?php // end article section ?>
 
-								<footer class="article-footer cf">
-
-								</footer>
-
 								<?php comments_template(); ?>
 
 							</article>
 
 							<?php endwhile; endif; ?>
-
-						</main>
-
-						<?php get_sidebar(); ?>
-
+						</div>
+					</div>
+				<div id="right-sidebar" class="large-4 columns float-right">
+					<?php get_sidebar(); ?>
 				</div>
-
 			</div>
 
-<?php get_footer(); ?>
+			<?php get_footer(); ?>

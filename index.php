@@ -2,7 +2,7 @@
 
 <div class="row content">
   <div class="small-12 large-8 columns">
-    <div class="large-12 columns">
+    <div class="large-12 columns slide-container">
       <div id="slider" class="orbit" role="region" aria-label="Content Slider" data-orbit>
         <ul class="orbit-container" tabindex="0">
           <button class="orbit-previous" aria-label="previous" tabindex="0"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
@@ -53,7 +53,7 @@
 			$categories = get_categories( $args );
 			foreach ($categories as $category) {
         $num_of_posts = 3;
-				include( locate_template( 'cat-row-part.php' ) );
+				include( locate_template( './partials/cat-row-part.php' ) );
 			}
 		?>
   </div>

@@ -284,7 +284,7 @@ function sp_theme_customizer($wp_customize) {
   	array(
   		'label'      => __( 'Read More Tag Image', sptheme ),
   		'section'    => 'theme_branding',
-      'description' => 'Best image size is 200px X 200px.',
+      'description' => 'Best image size is 100px X 50px.',
   		'settings'   => 'sp_read_more_img',
   	) )
   );
@@ -513,21 +513,162 @@ function sp_theme_customizer($wp_customize) {
     'section'    => 'offcanvas_nav_settings',
     'settings'   => 'sp_oc_nav_item_color',
   ) ) );
+  /********************************/
+
+  /****  Google Settings  ****/
+  $wp_customize->add_section(
+        'google_settings',
+        array(
+            'title' => 'Google Settings',
+            'description' => 'This is where you add the code for Google Analytics and Google AdSense.',
+            'priority' => 35,
+        )
+  );
+  $wp_customize->add_setting(
+    'sp_google_analytics',
+    array(
+        'default' => '',
+    )
+  );
+  $wp_customize->add_control(
+    'sp_google_analytics',
+    array(
+        'label' => 'Google Analytics',
+        'section' => 'google_settings',
+        'type' => 'textarea',
+    )
+  );
+  $wp_customize->add_setting(
+    'sp_google_ad_header',
+    array(
+        'default' => '',
+    )
+  );
+  $wp_customize->add_control(
+    'sp_google_ad_header',
+    array(
+        'label' => 'Google Ad Header',
+        'section' => 'google_settings',
+        'type' => 'textarea',
+    )
+  );
+  $wp_customize->add_setting(
+    'sp_google_ad_side',
+    array(
+        'default' => '',
+    )
+  );
+  $wp_customize->add_control(
+    'sp_google_ad_side',
+    array(
+        'label' => 'Google Ad Sidebar',
+        'section' => 'google_settings',
+        'type' => 'textarea',
+    )
+  );
+  $wp_customize->add_setting(
+    'sp_google_ad_footer',
+    array(
+        'default' => '',
+    )
+  );
+  $wp_customize->add_control(
+    'sp_google_ad_footer',
+    array(
+        'label' => 'Google Ad Footer',
+        'section' => 'google_settings',
+        'type' => 'textarea',
+    )
+  );
+
+  /****  Social Media Settings  ****/
+  $wp_customize->add_section(
+        'social_settings',
+        array(
+            'title' => 'Social Media Settings',
+            'description' => 'This is where you add the urls for your share buttons.',
+            'priority' => 35,
+        )
+  );
+  $wp_customize->add_setting(
+    'sp_facebook_follow_url',
+    array(
+        'default' => '',
+    )
+  );
+  $wp_customize->add_control(
+    'sp_facebook_follow_url',
+    array(
+        'label' => 'Facebook URL',
+        'section' => 'social_settings',
+        'type' => 'url',
+    )
+  );
+  $wp_customize->add_setting(
+    'sp_twitter_follow_url',
+    array(
+        'default' => '',
+    )
+  );
+  $wp_customize->add_control(
+    'sp_twitter_follow_url',
+    array(
+        'label' => 'Twitter URL',
+        'section' => 'social_settings',
+        'type' => 'url',
+    )
+  );
+  $wp_customize->add_setting(
+    'sp_pinterest_follow_url',
+    array(
+        'default' => '',
+    )
+  );
+  $wp_customize->add_control(
+    'sp_pinterest_follow_url',
+    array(
+        'label' => 'Pinterest URL',
+        'section' => 'social_settings',
+        'type' => 'url',
+    )
+  );
+  $wp_customize->add_setting(
+    'sp_instagram_follow_url',
+    array(
+        'default' => '',
+    )
+  );
+  $wp_customize->add_control(
+    'sp_instagram_follow_url',
+    array(
+        'label' => 'Instagram URL',
+        'section' => 'social_settings',
+        'type' => 'url',
+    )
+  );
 
 }
 
 function sp_customizer_css() {
     ?>
     <style type="text/css">
-        h4, .subscribe-box > form > input[type="submit"], .cat-title > h2, a, .button, .archive-title { color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
-        .top-bar, .top-bar ul, footer, .title-bar { background-color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
-        .bottom-bar, li.active {background-color: <?php echo get_theme_mod( 'sp_secondary_color' ); ?>;}
+        h4, .subscribe-box > form > input[type="submit"], .cat-title > h2, a, .button, .button.primary, .archive-title, .callout.primary:not(p), .primary { color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
+        #comment-list h3 { color: <?php echo get_theme_mod('sp_secondary_color'); ?>;}
+        .top-bar, .top-bar ul, footer, .title-bar, .comment.primary { background-color: <?php echo get_theme_mod( 'sp_primary_color' ); ?>; }
+        .bottom-bar, li.active, .button.secondary, .comment.secodary {background-color: <?php echo get_theme_mod( 'sp_secondary_color' ); ?>;}
         .orbit-image {max-height: <?php echo get_theme_mod( 'sp_slider_height'); ?>px; max-width: <?php echo get_theme_mod( 'sp_slider_width'); ?>px;}
         .orbit-image { bottom: <?php echo get_theme_mod( 'sp_img_adjust' ); ?>px;}
         .dropdown > li > a, footer, footer .widgettitle, footer a, .title-bar {color: <?php echo get_theme_mod('sp_nav_item_color', '#000'); ?>;}
         .dropdown.menu .has-submenu.is-down-arrow > a::after { border-color: <?php echo get_theme_mod('sp_nav_item_color', '#000'); ?> transparent transparent;}
         .off-canvas, .is-drilldown-submenu {background-color: <?php echo get_theme_mod('sp_oc_nav_background_color'); ?>;}
         .off-canvas a {color: <?php echo get_theme_mod('sp_oc_nav_item_color'); ?>;}
+        .fancy-more-tag {background: transparent url('<?php echo get_theme_mod('sp_read_more_img'); ?>') no-repeat;background-size: 150px 50px;
+    background-position: 0 10px;
+    height: 50px;
+    display: block;
+    color: white;
+    padding-left: 5px;}
+        p {color: black;}
         @media screen and (min-width: 0em) and (max-width: 31.9375em) {
           header a {
             color:white;
@@ -544,6 +685,30 @@ add_filter('nav_menu_css_class' , 'special_nav_class' , 10 , 2);
 function special_nav_class($classes, $item){
      $classes[] = "secondary-font";
      return $classes;
+}
+
+function foundation_pagination() {
+  global $wp_query;
+      $big = 999999999; // need an unlikely integer
+      $pages = paginate_links( array(
+              'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+              'format' => '?paged=%#%',
+              'current' => max( 1, get_query_var('paged') ),
+              'total' => $wp_query->max_num_pages,
+              'prev_next' => false,
+              'type'  => 'array',
+              'prev_next'   => TRUE,
+  			'prev_text'    => __('«'),
+  			'next_text'    => __('»'),
+          ) );
+          if( is_array( $pages ) ) {
+              $paged = ( get_query_var('paged') == 0 ) ? 1 : get_query_var('paged');
+              echo '<ul class="pagination">';
+              foreach ( $pages as $page ) {
+                      echo "<li class=\"pagination " . $paged . "\">$page</li>";
+              }
+             echo '</ul>';
+          }
 }
 
 /************* ACTIVE SIDEBARS ********************/
@@ -702,74 +867,97 @@ class F_Drilldown_Walker extends Walker_Nav_Menu {
     }
 }
 
-// /**
-//  * Top Bar Walker
-//  *
-//  * @since 1.0.0
-//  */
-// class Top_Bar_Walker extends Walker_Nav_Menu {
-//
-//   /**
-//   * @see Walker_Nav_Menu::start_lvl()
-//  * @since 1.0.0
-//  *
-//  * @param string $output Passed by reference. Used to append additional content.
-//  * @param int $depth Depth of page. Used for padding.
-// */
-//   function start_lvl( &$output, $depth = 0, $args = array() ) {
-//       $output .= "\n<ul class=\"vertical submenu\">\n";
-//   }
-//
-//   /**
-//    * @see Walker_Nav_Menu::start_el()
-//    * @since 1.0.0
-//    *
-//    * @param string $output Passed by reference. Used to append additional content.
-//    * @param object $item Menu item data object.
-//    * @param int $depth Depth of menu item. Used for padding.
-//    * @param object $args
-//    */
-//
-//   function start_el( &$output, $object, $depth = 0, $args = array(), $current_object_id = 0 ) {
-//       $item_html = '';
-//       parent::start_el( $item_html, $object, $depth, $args );
-//
-//       $output .= ( $depth == 0 ) ? '' : '';
-//
-//       $classes = empty( $object->classes ) ? array() : $object->classes = array();
-//
-//       if ( in_array('label', $classes) ) {
-//           $item_html = preg_replace( '/<a[^>]*>( .* )<\/a>/iU', '<label>$1</label>', $item_html );
-//       }
-//
-//       if ( in_array('divider', $classes) ) {
-//         $item_html = preg_replace( '/<a[^>]*>( .* )<\/a>/iU', '', $item_html );
-//       }
-//
-//       $output .= $item_html;
-//   }
-//
-// /**
-//    * @see Walker::display_element()
-//    * @since 1.0.0
-//  *
-//  * @param object $element Data object
-//  * @param array $children_elements List of elements to continue traversing.
-//  * @param int $max_depth Max depth to traverse.
-//  * @param int $depth Depth of current element.
-//  * @param array $args
-//  * @param string $output Passed by reference. Used to append additional content.
-//  * @return null Null on failure with no changes to parameters.
-//  */
-//   function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) {
-//       $element->has_children = !empty( $children_elements[$element->ID] );
-//       $element->classes[] = ( $element->current || $element->current_item_ancestor ) ? 'active' : '';
-//       $element->classes[] = ( $element->has_children ) ? '' : '';
-//
-//       parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
-//   }
-//
-// }
+class SP_Comment_Walker extends Walker_Comment {
+  // init classwide variables
+	var $tree_type = 'comment';
+	var $db_fields = array( 'parent' => 'comment_parent', 'id' => 'comment_ID' );
+
+	/** CONSTRUCTOR
+	 * You'll have to use this if you plan to get to the top of the comments list, as
+	 * start_lvl() only goes as high as 1 deep nested comments */
+	function __construct() { ?>
+
+		<h3 class="primary"><?php comments_number( __( '<span>No</span> Comments', 'sptheme' ), __( '<span>One</span> Comment', 'sptheme' ), __( '<span>%</span> Comments', 'sptheme' ) );?></h3>
+		<div id="comment-list">
+
+	<?php }
+
+	/** START_LVL
+	 * Starts the list before the CHILD elements are added. Unlike most of the walkers,
+	 * the start_lvl function means the start of a nested comment. It applies to the first
+	 * new level under the comments that are not replies. Also, it appear that, by default,
+	 * WordPress just echos the walk instead of passing it to &$output properly. Go figure.  */
+	function start_lvl( &$output, $depth = 0, $args = array() ) {
+		$GLOBALS['comment_depth'] = $depth + 1; ?>
+
+				<div class="comment-sub-list" style="margin-left: <?php echo $GLOBALS['comment_depth'] *= 50; ?>px;">
+	<?php }
+
+	/** END_LVL
+	 * Ends the children list of after the elements are added. */
+	function end_lvl( &$output, $depth = 0, $args = array() ) {
+		$GLOBALS['comment_depth'] = $depth + 1; ?>
+
+    </div><!-- /.children -->
+
+	<?php }
+
+	/** START_EL */
+	function start_el( &$output, $comment, $depth, $args, $id = 0 ) {
+		$depth++;
+		$GLOBALS['comment_depth'] = $depth;
+		$GLOBALS['comment'] = $comment;
+		$parent_class = ( empty( $args['has_children'] ) ? '' : 'parent' ); ?>
+    <?php if($depth == 1) :?>
+  		<div class="media-object primary callout" id="comment-<?php comment_ID() ?>">
+    <?php else: ?>
+    	<div class="media-object" id="comment-<?php comment_ID() ?>">
+    <?php endif; ?>
+				<div class="media-object-section comment-author vcard author">
+          <div class="thumbnail">
+            <?php echo ( $args['avatar_size'] != 0 ? get_avatar( $comment, $args['avatar_size'] ) :'' ); ?>
+          </div>
+				</div><!-- /.comment-author -->
+
+				<div id="comment-content-<?php comment_ID(); ?>" class="comment-content media-object-section">
+					<?php if( !$comment->comment_approved ) : ?>
+					<em class="comment-awaiting-moderation">Your comment is awaiting moderation.</em>
+
+					<?php else: ?>
+              <h3><?php echo get_comment_author_link(); ?></h3>
+              <div class="comment-meta comment-meta-data">
+                <a href="<?php echo htmlspecialchars( get_comment_link( get_comment_ID() ) ) ?>"><?php comment_date(); ?> at <?php comment_time(); ?></a> <?php edit_comment_link( '(Edit)' ); ?>
+              </div><!-- /.comment-meta -->
+              <p><?php echo comment_text(); ?></p>
+					<?php endif; ?>
+				</div><!-- /.comment-content -->
+
+				<div class="reply">
+					<?php $reply_args = array(
+						'add_below' => $add_below,
+						'depth' => $depth,
+						'max_depth' => $args['max_depth'] );
+
+					comment_reply_link( array_merge( $args, $reply_args ) );  ?>
+				</div><!-- /.reply -->
+
+	<?php }
+
+	function end_el(&$output, $comment, $depth = 0, $args = array() ) { ?>
+
+  </div><!-- /#comment-' . get_comment_ID() . ' -->
+
+	<?php }
+
+	/** DESTRUCTOR
+	 * I just using this since we needed to use the constructor to reach the top
+	 * of the comments list, just seems to balance out :) */
+	function __destruct() { ?>
+
+	</div><!-- /#comment-list -->
+
+	<?php }
+}
 
 
 

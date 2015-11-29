@@ -11,23 +11,16 @@
       <!-- Please call pinit.js only once per page -->
       <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
     </div>
+    <?php if (get_theme_mod('sp_google_ad_header') != '' ) : ?>
     <div class="small-12 medium-4 columns">
       <div class="horz ads">
 				<div class="adsbygoogleContainer">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		        <!-- Diane Homan -->
-		        <ins class="adsbygoogle"
-		             style="display:block"
-		             data-ad-client="ca-pub-9239834729734789"
-		             data-ad-slot="9178492354"
-		             data-ad-format="rectangle"></ins>
-		        <script>
-		        (adsbygoogle = window.adsbygoogle || []).push({});
-		        </script>
-		    </div>
+          <?php echo get_theme_mod('sp_google_ad_footer'); ?>
+        </div>
       </div>
     </div>
-  </div>
+  <?php endif; ?>
+</div>
 </footer>
 <div class="bottom-bar">
   <div class="row align-middle">
@@ -37,16 +30,16 @@
     <div class="small-12 medium-4 columns">
       <ul class="center">
         <li>
-          <a href="#" class="webicon svg facebook small">Follow us on Instagram</a>
+          <a href="<?php echo get_theme_mod('sp_facebook_follow_url'); ?>" class="webicon svg facebook small">Follow us on Facebook</a>
         </li>
         <li>
-          <a href="#" class="webicon svg twitter small">Follow us on Instagram</a>
+          <a href="<?php echo get_theme_mod('sp_twitter_follow_url'); ?>" class="webicon svg twitter small">Follow us on Twitter</a>
         </li>
         <li>
-          <a href="#" class="webicon svg pinterest small">Follow us on Instagram</a>
+          <a href="<?php echo get_theme_mod('sp_pinterest_follow_url'); ?>" class="webicon svg pinterest small">Follow us on Pinterest</a>
         </li>
         <li>
-          <a href="#" class="webicon svg instagram small">Follow us on Instagram</a>
+          <a href="<?php echo get_theme_mod('sp_instagram_follow_url'); ?>" class="webicon svg instagram small">Follow us on Instagram</a>
         </li>
       </ul>
     </div>
@@ -64,7 +57,7 @@
     <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/app.js"></script>
     <script>
       jQuery(document).ready(function(){
-        jQuery("#s").attr("placeholder", "search");
+        jQuery("input[type='search']").attr("placeholder", "search");
         jQuery('#slider').spotSwipe().on('swipeleft', function(){
           jQuery(this).trigger('orbit.changeslide', false);
         });

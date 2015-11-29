@@ -27,6 +27,7 @@
 		<?php // end of wordpress head ?>
 
 		<?php // drop Google Analytics Here ?>
+			<?php echo get_theme_mod('sp_google_analytics'); ?>
 		<?php // end analytics ?>
 	</head>
 	<body>
@@ -45,22 +46,15 @@
 
 					<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
 				<div class="off-canvas-content" data-off-canvas-content>
+					<?php if (get_theme_mod('sp_google_ad_header') != '' ) : ?>
 					<div class="row">
 						<div class="banner ads large-12 columns text-center">
 							<div class="adsbygoogleContainer">
-								<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-								<!-- Diane Homan -->
-								<ins class="adsbygoogle"
-								style="display:block"
-								data-ad-client="ca-pub-9239834729734789"
-								data-ad-slot="9178492354"
-								data-ad-format="auto"></ins>
-								<script>
-									(adsbygoogle = window.adsbygoogle || []).push({});
-								</script>
+								<?php echo get_theme_mod('sp_google_ads_header'); ?>
 							</div>
 						</div>
 					</div>
+				<?php endif; ?>
 					<header class="large-12 columns">
 						<div class="title-bar hide-for-large">
 							<button type="button" class="menu-icon" data-toggle="offCanvas"></button>
@@ -71,7 +65,7 @@
 							</div>
 						</div>
 						<div id="main-menu" class="large-12 columns top-bar show-for-large">
-							<div class="top-bar-left">
+							<div class="large-6 columns">
 								<div class="text-center">
 									<?php $center = get_theme_mod('sp_center_nav',true);
 												$centerclass = "";
@@ -97,7 +91,7 @@
 							<div class="small-12 large-2 columns text-center float-left">
 								<img class="logo" src="<?php echo get_theme_mod( 'sp_logo' ); ?>" />
 							</div>
-							<div class="large-10 columns site-title-container">
+							<div class="pull-2 large-10 columns site-title-container">
 								<h1 class="site-title"><?php echo get_bloginfo( 'name' ); ?></h1>
 							</div>
 						</div>

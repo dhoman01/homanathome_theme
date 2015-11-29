@@ -7,7 +7,7 @@
 		<div id="archive-list" class="row small-up-1 medium-up-2 large-up-3">
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 				<div class="columns">
-					<?php include( locate_template( 'post-thumb.php' ) ) ?>
+					<?php include( locate_template( './partials/post-thumb.php' ) ) ?>
 				</div>
 		<?php endwhile; ?>
 		<?php else : ?>
@@ -26,6 +26,9 @@
 
 		<?php endif; ?>
 			</div>
+		</div>
+		<div class="row text-center">
+			<?php foundation_pagination(); ?>
 		</div>
 	</div>
 	<div id="right-sidebar" class="large-4 columns float-right">

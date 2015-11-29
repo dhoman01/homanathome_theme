@@ -14,7 +14,7 @@ if ( post_password_required() ) {
 
   <?php if ( have_comments() ) : ?>
 
-    <h3 id="comments-title" class="h2"><?php comments_number( __( '<span>No</span> Comments', 'sptheme' ), __( '<span>One</span> Comment', 'sptheme' ), __( '<span>%</span> Comments', 'sptheme' ) );?></h3>
+    <!-- <h3 id="comments-title" class="primary"><?php comments_number( __( '<span>No</span> Comments', 'sptheme' ), __( '<span>One</span> Comment', 'sptheme' ), __( '<span>%</span> Comments', 'sptheme' ) );?></h3> -->
 
     <section class="commentlist">
       <?php
@@ -22,13 +22,14 @@ if ( post_password_required() ) {
           'style'             => 'div',
           'short_ping'        => true,
           'avatar_size'       => 40,
-          'callback'          => 'sp_comments',
+          'callback'          => '',
           'type'              => 'all',
-          'reply_text'        => __('Reply', 'sptheme'),
+          'reply_text'        => '<div class="hollow button">Reply</div>',
           'page'              => '',
           'per_page'          => '',
           'reverse_top_level' => null,
-          'reverse_children'  => ''
+          'reverse_children'  => '',
+          'walker'            => new SP_Comment_Walker(),
         ) );
       ?>
     </section>
@@ -46,5 +47,4 @@ if ( post_password_required() ) {
 
   <?php endif; ?>
 
-  <?php comment_form(); ?>
-
+  <?php comment_form( array('class_submit' => 'hollow button')); ?>
