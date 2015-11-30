@@ -42,7 +42,7 @@
 </div>
 <?php if (get_theme_mod('sp_google_ad_side') != '' ) : ?>
 <div class="row medium-2">
-	<div class="columns horz ads">
+	<div class="horz ads">
 		<div class="adsbygoogleContainer">
 			<?php echo get_theme_mod('sp_google_ad_side');?>
 		</div>

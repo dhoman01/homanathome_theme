@@ -50,7 +50,7 @@
 					<div class="row">
 						<div class="banner ads large-12 columns text-center">
 							<div class="adsbygoogleContainer">
-								<?php echo get_theme_mod('sp_google_ads_header'); ?>
+								<?php echo get_theme_mod('sp_google_ad_header'); ?>
 							</div>
 						</div>
 					</div>

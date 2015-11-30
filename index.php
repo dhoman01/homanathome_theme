@@ -41,7 +41,7 @@
 				'type'                     => 'post',
 				'child_of'                 => 0,
 				'parent'                   => 0,
-				'orderby'                  => 'id',
+				'orderby'                  => 'name',
 				'order'                    => 'desc',
 				'hide_empty'               => 1,
 				'hierarchical'             => 0,
